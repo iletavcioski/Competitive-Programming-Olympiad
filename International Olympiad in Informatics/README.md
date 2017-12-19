@@ -1,1 +1,1 @@
-#Solved Problems from International Olympiads in Informatics
+# Solved Problems from International Olympiads in Informatics
