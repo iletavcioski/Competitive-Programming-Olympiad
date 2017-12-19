@@ -1,2 +1,1 @@
-# Competitive Programming 
-# Solutions of olympiads in Informatics
+# Solutions of Olympiads in Informatics
