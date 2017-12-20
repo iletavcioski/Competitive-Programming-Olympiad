@@ -1,1 +1,1 @@
-# Solutions of Olympiads in Informatics
+# Solutions of Olympiads in Informatics and Online Judges
