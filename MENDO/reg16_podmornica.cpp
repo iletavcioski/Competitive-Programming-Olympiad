@@ -1,6 +1,6 @@
-#include <iostream>
-#include <vector>
-#include <cstring>
+#include<iostream>
+#include<vector>
+#include<cstring>
 using namespace std;
 int N,M,L,K,P;
 vector<vector<int> > v;
