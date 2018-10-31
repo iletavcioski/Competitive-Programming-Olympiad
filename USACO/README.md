@@ -1,1 +1,0 @@
-# Solved Problems from USACO
