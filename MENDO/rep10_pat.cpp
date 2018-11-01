@@ -1,27 +1,28 @@
-#include <iostream>
-#include <vector>
+#include<iostream>
+#include<vector>
+#include<cstring>
 using namespace std;
-int dp[202][202][2];
-int pocetok[202][202][2];
-vector<pair<int,int> > v1,v2;
-int N,M;
-void fun1(int i,int j,int pocetno_vreme,int vreme)
+vector<pair<int,int> > a,b;
+int m,k;
+int dp[201][201][2];
+int pocetok[201][201][2];
+void funkcija1(int x,int y,int vreme,int mini)
 {
-    if(i>N)
+    if(x>m)
         return;
-    pocetno_vreme=max(pocetno_vreme,v1[i-1].first);
-    pocetok[i][j][0]=pocetno_vreme;
-    dp[i][j][0]=min(dp[i][j][0],max(pocetno_vreme+v1[i-1].second,vreme));
-    fun1(i+1,j,pocetok[i][j][0]+10,dp[i][j][0]+10);
+    vreme=max(vreme,a[x-1].first);
+    pocetok[x][y][0]=vreme;
+    dp[x][y][0]=min(dp[x][y][0],max(vreme+a[x-1].second,mini));
+    funkcija1(x+1,y,vreme+10,dp[x][y][0]+10);
 }
-void fun2(int i,int j,int pocetno_vreme,int vreme)
+void funkcija2(int x,int y,int vreme,int mini)
 {
-    if(j>M)
+    if(y>k)
         return;
-    pocetno_vreme=max(pocetno_vreme,v2[j-1].first);
-    pocetok[i][j][1]=pocetno_vreme;
-    dp[i][j][1]=min(dp[i][j][1],max(pocetno_vreme+v2[j-1].second,vreme));
-    fun2(i,j+1,pocetok[i][j][1]+10,dp[i][j][1]+10);
+    vreme=max(vreme,b[y-1].first);
+    pocetok[x][y][1]=vreme;
+    dp[x][y][1]=min(dp[x][y][1],max(vreme+b[y-1].second,mini));
+    funkcija2(x,y+1,vreme+10,dp[x][y][1]+10);
 }
 int main()
 {
@@ -31,38 +32,33 @@ int main()
     {
         char c;
         cin>>c;
-        int a,b;
-        cin>>a>>b;
+        int bb,g;
+        cin>>bb>>g;
         if(c=='A')
-            v1.push_back(make_pair(a,b));
+        a.push_back(make_pair(bb,g));
         else
-            v2.push_back(make_pair(a,b));
+        b.push_back(make_pair(bb,g));
     }
-    for(int i=0;i<n;i++)
+    memset(dp,1e9+1,sizeof(dp));
+    memset(pocetok,1e9+1,sizeof(pocetok));
+    m=a.size();
+    k=b.size();
+    dp[1][0][0]=a[0].first+a[0].second;
+    dp[0][1][1]=b[0].first+b[0].second;
+    pocetok[1][0][0]=a[0].first;
+    pocetok[0][1][1]=b[0].first;
+    for(int i=0;i<=m;i++)
     {
-        for(int j=0;j<n;j++)
-        {
-            dp[i][j][0]=dp[i][j][1]=1000000000;
-        }
-    }
-    N=v1.size();
-    M=v2.size();
-    dp[0][1][1]=v2[0].first+v2[0].second;
-    dp[1][0][0]=v1[0].first+v1[0].second;
-    pocetok[0][1][1]=v2[0].first;
-    pocetok[1][0][0]=v1[0].first;
-    for(int i=0;i<=N;i++)
-    {
-        for(int j=0;j<=M;j++)
+        for(int j=0;j<=k;j++)
         {
             if(i==0&&j==0)
                 continue;
-            fun1(i+1,j,pocetok[i][j][0]+10,dp[i][j][0]+10);
-            fun1(i+1,j,dp[i][j][1],0);
-            fun2(i,j+1,pocetok[i][j][1]+10,dp[i][j][1]+10);
-            fun2(i,j+1,dp[i][j][0],0);
+            funkcija1(i+1,j,pocetok[i][j][0]+10,dp[i][j][0]+10);
+            funkcija1(i+1,j,dp[i][j][1],0);
+            funkcija2(i,j+1,pocetok[i][j][1]+10,dp[i][j][1]+10);
+            funkcija2(i,j+1,dp[i][j][0],0);
         }
     }
-    cout<<min(dp[N][M][0],dp[N][M][1])<<endl;
+    cout<<min(dp[m][k][0],dp[m][k][1])<<endl;
     return 0;
 }
